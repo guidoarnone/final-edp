@@ -154,8 +154,7 @@ El objetivo de esta presentación es probar el teorema de Malgrange-Ehrenpreis, 
 \[
 \L u = f \tag{$1$}
 \]
-tiene una solución en $\dist$. De hecho, si $f$ es suave la solución obtenida también lo es. \todo{revisar, por las dudas, cuando lo agregue.}
-
+tiene una solución en $\dist$. De hecho, si $f$ es suave la solución obtenida también lo es. 
 \subsection{Sobre la Notación}
 
 Dado $U \subset \R^n$, notaremos $\ip{,}$ y $\|\cdot\|$ al producto interno y norma de $L^2(U)$ respectivamente. Indicaremos el dominio sólo cuando no se deduzca del contexto. La expresión \guill{operador diferencial} y el símbolo $\L$ referirán siempre a un operador diferencial parcial lineal (no nulo) con coeficientes constantes, y escribiremos $q(D)$ al operador asociado a un polinomio $q \in \R[X_1, \dots, X_n]$.
@@ -206,7 +205,7 @@ es un operador diferencial. Basta verlo para $\L = D^\alpha$, pues la asignació
 e^{\eps x_1}D^\alpha(e^{-\eps x_1}\psi) &= e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}\left(\frac{\partial}{\partial x_1}(e^{-\eps x_1}\psi)\right)\\
 &= e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}\left(-\eps e^{-\eps x_1}\psi + e^{-\eps x_1}\frac{\partial}{\partial x_1}\psi\right)\\
 &= e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}(e^{-\eps x_1}(-\eps\psi)) + e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}(e^{-\eps x_1}\partial_1\psi)\\
-&= -\eps q(D)(\psi) + q(D)(\delta_1\psi) = -\eps q(D)(\psi) + (X_1q)(D)(\psi).
+&= -\eps q(D)(\psi) + q(D)(\partial_1\psi) = -\eps q(D)(\psi) + (X_1q)(D)(\psi).
 \end{align*}
 Más todavía, los términos de orden mayor de $\widetilde{\L}_\eps$ coinciden con los de $\L$ pues
 \[
@@ -261,7 +260,8 @@ Dado $\chi$ un núcleo regularizante, definimos $f_\eps = f \ast \chi_\eps$. Est
 \L f \ast \chi_\eps(z) = \ev{\L f,\chi_\eps(z-\cdot)} = \ev{f,\L^\ast\chi_\eps(z-\cdot)} = \ev{f,(\L\chi_\eps)(z-\cdot)} = f \ast (\L \chi_\eps
 )(z) = \L f_\eps(z),
 \]
-así que si $\L f_\eps(z) \neq 0$, luego $\chi_\eps(z. -)$ que tiene soporte en $B_\eps(z)$ no está contenido fuera de $B_r(0)$, y así $z \in B_{r+\eps}(0)$\todo{Pasar esto directamente al teorema de convoluciones y soporte, ver si además se puede probar la diferenciabilidad}
+así que si $\L f_\eps(z) \neq 0$, luego $\chi_\eps(z. -)$ que tiene soporte en $B_\eps(z)$ no está contenido fuera de $B_r(0)$, y así $z \in B_{r+\eps}(0)$.
+
 \end{proof}
 
 \section{\scshape Aproximación y soluciones en $L^2_{loc}$}
@@ -300,6 +300,8 @@ para toda $\varphi \in \C_c^\infty(B_R(0))$. \todo{Y porqué esto alcanza para t
 v_j \xrightarrow{L^2(B_r(0))} v.
 \]
 \end{proposition}
+\begin{proof} \todo{Hacer!}
+\end{proof}
 
 \begin{theorem} \label{teo-sol-l2-loc}Sea $\L = p(D)$ un operador diferencial. Dada $g \in L^2_{loc}(\R^n)$, existe $u \in L^2_{loc}(\R^n)$ tal que $\L u = g$.
 \end{theorem}
@@ -342,13 +344,83 @@ ya que $\varphi$ tiene soporte compacto. Por lo tanto, es
 \end{align*}
 \end{proof}
 
-\begin{theorem}[Malgrange-Ehrenpreis] Todo operador diferencial lineal (no nulo) con coeficientes constantes  admite una solución fundamental.
+\begin{theorem}[Malgrange-Ehrenpreis] Todo operador diferencial parcial lineal no nulo con coeficientes constantes admite una solución fundamental.
 \end{theorem}
 \begin{proof} Sea $\L = p(D)$ un operador diferencial. Por el $\tpaint{Teorema \ref{teo-sol-l2-loc}}$, existe $u \in L^2_{loc}(\R^n)$ tal que $\L u = H$. Considerando la distribución $\frac{\partial^n}{\partial x_1 \cdots \partial x_n} u$ se tiene efectivamente que
 \[
 \L \left(\frac{\partial^n}{\partial x_1 \cdots \partial x_n} u\right) = \frac{\partial^n}{\partial x_1 \cdots \partial x_n} \L u = \frac{\partial^n}{\partial x_1 \cdots \partial x_n} H = \delta_0.
 \]
 \end{proof}
-\todo{definir convoluciones, dar propiedades, y definir soporte, teo 4.1.1 Hörmander}
-\todo{Agregar la existencia de soluciones, revisar que son suaves si el dato es suave}
+
+\begin{lemma} Si $f \in \test$, entonces $\delta_0 \ast f = f$.
+\end{lemma}
+\begin{proof} Por definición, es
+\[
+\delta_0 \ast f(x) = \ev{\delta_0,f(x -\cdot)} = \int_{\R^n} f(x-\cdot) d \delta_0 = f(x - 0) = f(x).
+\]
+\end{proof}
+
+\begin{corollary} Sea $f \in \test$ y $\L = p(D)$ un operador diferencial. Entonces la ecuación $\L u = f$ tiene una solución en $\test$.
+\end{corollary}
+\begin{proof} Sea $s$ una solución fundamental para $\L$. Si ponemos $u := s \ast f$, esto define una función test y
+\[
+\L (s \ast f) = (\L s) \ast f = \delta_0 \ast f = f,
+\]
+lo que concluye la demostración.
+\end{proof}
+
+\begin{example} Notemos que el corolario anterior describe además como encontrar soluciones suaves a partir de una solución fundamental. Usemos esto para tratar un caso ya conocido: hallemos soluciones suaves a la ecuación
+\[
+b_1 \cdot \frac{\partial u}{\partial x_1} + \cdots + b_n \cdot \frac{\partial u}{\partial x_n} = \beta u + g \tag{2}
+\]
+con $g \in \C_c^\infty(\R^n), b = (b_1, \dots, b_n) \in \R$ y $\beta \in \R_{ < 0}$. 
+
+Observemos que notando $p = \sum_{i=1}^n b_i X_i - \beta$ y $\L = p(D)$, la ecuación se puede rescribir como
+\[
+\L u = g.
+\]
+Busquemos en primer lugar la solución fundamental del operador $\L$. Proponemos 
+\[
+\ev{u,\varphi} := \int_{0}^{+\infty}\varphi(tb)e^{\beta t}dt,
+\]
+ya que
+\begin{align*}
+\ev{\L u, \varphi} &= \ev{u,\L^\ast \varphi} = - \sum_{i=1}^n b_i \int_{0}^{+\infty}\varphi_i(tb)e^{\beta t}dt + \beta \int_0^{\infty}\varphi(tb)e^{\beta t}dt\\
+&= -\int_{0}^{+\infty}\left(\sum_{i=1}^n b_i \varphi_i(tb)\right)e^{\beta t}dt +  \int_0^{\infty}\varphi(tb)\beta e^{\beta t}dt\\
+&= - \int_{0}^{+\infty} \frac{d}{dt}\varphi(tb) e^{\beta t} + \varphi(tb)\frac{d}{dt}e^{\beta t}dt\\
+&= -\int_{0}^{+\infty}\frac{d}{dt}(\varphi(tb)e^{\beta t})dt = \varphi(tb)e^{\beta t} \Bigg|_{+\infty}^0 = \varphi(0).
+\end{align*}
+para cada $\varphi \in \C_c^\infty(\R^n)$. Por lo tanto, una solución para $\tpaint{(2)}$ es
+\[
+v(x) = u \ast g(x) = \ev{u, g(x - \cdot)} = \int_{0}^{+\infty}g(x-tb)e^{\beta t}dt.
+\] 
+\end{example}
+
+\subsection{Apéndice: sobre la convolución de distribuciones}
+
+\begin{definition} Sean $T \in \dist$ y $\varphi \in \test$. Se define la \textit{convolución} de $T$ y $\varphi$ como
+\[
+(T \ast \varphi)(x) := \ev{T,\varphi(x - \cdot)}.
+\]
+\end{definition}
+
+\begin{definition} Sea $T \in \dist(U)$ y $V \subset U$ un abierto. Decimos que $T$ se anula en $V$ si para toda $\varphi \in \test$ con $\sop \varphi \subset V$ se tiene que $\ev{T,\varphi} = 0$.
+\end{definition}
+
+\begin{definition} El \textit{soporte} de una distribución $T \in \dist(U)$ es el abierto maximal\footnote{Esto está bien definido, y más aún se puede verificar que el soporte es el complemento de la unión de los abiertos donde $T$ se anula.} en $V$ tal que $T$ se anula en $V^c$. 
+\end{definition}
+
+\begin{theorem}[\cite{H}, Theorem 4.1.1]  Si $T \in \dist$ y $\varphi \in \test$, entonces $\sop T \ast \varphi \subset \sop T + \sop \varphi$ y
+\[
+D^\alpha (T \ast \varphi ) = (D^\alpha T) \ast \varphi = T \ast (D^\alpha \varphi)
+\]
+para todo multiíndice $\alpha$. \qed
+\end{theorem}
+
+\scshape
+\begin{thebibliography}{}
+\normalfont
+\bibitem{R}{Jean-Pierre Rosay. \textit{A Very Elementary Proof of the Malgrange-Ehrenpreis Theorem}. The American Mathematical Monthly, 1991.}
+\bibitem{H}{Lars Hörmander. \textit{The Analysis of Linear Partial Differential Operators I. }Springer, 1990.}
+\end{thebibliography}
 \end{document}
