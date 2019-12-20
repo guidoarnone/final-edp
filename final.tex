@@ -1,0 +1,354 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+\usepackage[bitstream-charter]{mathdesign}
+
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{tocbibind}
+\usepackage[
+    %textcolor=red,
+    linecolor=color,
+    bordercolor=color,
+    backgroundcolor=white,
+]{todonotes}
+\usepackage{titlesec}
+\titleformat{\section}[block]{\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}[block]{\large\bfseries\scshape\filcenter}{}{1em}{}
+
+\usepackage{thmtools,xcolor}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[misc]{ifsym}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\usepackage{graphicx}
+\usepackage{lipsum}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows}
+\usetikzlibrary{matrix}
+
+\definecolor{color}{RGB}{189, 77, 77}
+\renewcommand\qedsymbol{$\paint{\blacktriangleleft}$}
+\declaretheoremstyle[
+  spaceabove = 6pt,
+  spacebelow = 6pt,
+  headfont=\color{color}\normalfont\bfseries,
+  notefont=\color{color}\normalfont\bfseries
+]{colored}
+\theoremstyle{colored}
+\DeclareMathOperator{\sop}{sop}
+\newtheorem{definition}{\scshape Definición}
+\newtheorem{theorem}{\scshape Teorema}
+\newtheorem*{theorem*}{Teorema}
+\newtheorem{proposition}{\scshape Proposición}
+\newtheorem{corollary}{\scshape Corolario}
+\newtheorem{lemma}{\scshape Lema}
+\newtheorem{remark}{\scshape Observación}
+\newtheorem{example}{\scshape Ejemplo}
+\newtheorem{exercise}{Ejercicio}
+\newtheorem{exam-exercise}{Ejercicio}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=color,
+    filecolor=color,
+    linkcolor=color,
+    urlcolor=color,
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathscr{C}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\Ss}{\mathbb{S}}
+\renewcommand{\k}{\Bbbk}
+\newcommand{\M}[2]{\mathsf{M}_{#1}#2}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\nat}[1]{[\![#1]\!]}
+\newcommand{\natzero}[1]{\nat{#1}_0}
+\newcommand{\ol}{\overline}
+\newcommand{\tint}[1]{\stackrel{o}{#1}}
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\test}{\mathscr{D}}
+\newcommand{\dist}{\test'}
+\newcommand{\ev}[1]{\langle #1 \rangle}
+\newcommand{\ip}[1]{( #1 )}
+\newcommand{\guill}[1]{«#1»}
+\renewcommand{\L}{\mathscr{L}}
+\newcommand{\paint}[1]{\color{color}{#1}}
+\newcommand{\tpaint}[1]{\paint{\textbf{#1}}}
+\newcommand{\paintline}{\begin{center}
+$\paint{
+\rule{400pt}{0.5pt}
+}$
+\vspace{10pt}
+\end{center}}
+\tcbset{colback=color!25,colframe=black!0, sharp corners = all}
+
+%-----------------------
+\lhead{Ecuaciones Diferenciales}
+\rhead{Examen Final}
+\begin{document}
+
+\author{Guido Arnone}
+\title{$\tpaint{\scshape Ecuaciones Diferenciales - Examen Final}$\\
+\Large El teorema de Malgrange-Eherenpreis}
+\date{27 de diciembre de 2019}
+
+\maketitle
+
+Recordemos que dado un abierto $U \subset \R^n$ y una distribución $T \in \dist(U)$, se define su \textit{derivada débil} con respecto a cierta coordenada $i \in \nat{n}$ por
+\[
+\ev{\partial_iT,\varphi} := -\ev{T,\partial_i\varphi}. 
+\]
+
+Usando partes, esto coincide con la noción usual para funciones suaves: la derivada débil de una función suave coincide con la distribución que induce su derivada usual. Dado un polinomio $p = \sum_{\alpha}c_\alpha x^\alpha \in \R[X_1, \dots, X_n]$, se puede considerar el operador \textit{operador diferencial parcial lineal con coeficientes constantes} asociado a $p$,
+\begin{align*}
+\L \colon & \dist \longrightarrow \dist\\
+& T \mapsto \sum_{\alpha}c_\alpha D^\alpha T.
+\end{align*}
+Se define también el \textit{operador adjunto formal} de $\L$ como
+\begin{align*}
+\L^\ast \colon & \dist \longrightarrow \dist\\
+& T \mapsto \sum_{\alpha}(-1)^{|\alpha|}c_\alpha D^\alpha T,
+\end{align*}
+el cual satisface $\ev{\L T, \varphi} = \ev{T,\L^\ast \varphi}$ para todo $T \in \dist$ y $\varphi \in \test$. Análogamente se puede considerar la (co)restricción de $\L$ y $\L^\ast$ a  $\mathscr{C}_c^\infty(U)$.
+
+Una \textit{solución fundamental} para $\L$ es una distribución $T \in \dist$ que satisface la ecuación
+\[
+\L T = \delta_0
+\]
+con $\delta_0$ la delta de Dirac. Esto es reminiscente al la ecuación de Laplace,
+\[
+\Delta u = 0
+\]
+para la cual existe una solución $\Phi \in \C^2(\R^n \setminus \{0\})$ definida por
+\[
+\Phi(x) = \begin{cases}
+-\frac{1}{2\pi}\log|x| &\text{si $n = 2$}\\
+\frac{1}{n(n-2)\omega_n|x|^{n-2}}&\text{si $n \geq 3$}
+\end{cases}
+\]
+que \guill{concentra toda la masa en el cero}. De hecho, en el sentido distribucional $\Phi$ es una solución fundamental para el operador $-\Delta$. Sabemos también que si $f \in \C_c^2(\R^n)$, entonces la función $u := \Phi \ast f$ es de clase $\C^2(\R^n)$ y satisface la ecuación de Poisson,
+\[
+-\Delta u = f.
+\]
+
+El objetivo de esta presentación es probar el teorema de Malgrange-Ehrenpreis, que garantiza la existencia de soluciones fundamentales para cualquier operador diferencial parcial lineal con coeficientes constantes no nulo. A partir de este resultado y extendiendo la noción de convolución al contexto de las distribuciones, como en el caso del laplaciano se puede concluir que toda ecuación de la forma
+\[
+\L u = f \tag{$1$}
+\]
+tiene una solución en $\dist$. De hecho, si $f$ es suave la solución obtenida también lo es. \todo{revisar, por las dudas, cuando lo agregue.}
+
+\subsection{Sobre la Notación}
+
+Dado $U \subset \R^n$, notaremos $\ip{,}$ y $\|\cdot\|$ al producto interno y norma de $L^2(U)$ respectivamente. Indicaremos el dominio sólo cuando no se deduzca del contexto. La expresión \guill{operador diferencial} y el símbolo $\L$ referirán siempre a un operador diferencial parcial lineal (no nulo) con coeficientes constantes, y escribiremos $q(D)$ al operador asociado a un polinomio $q \in \R[X_1, \dots, X_n]$.
+
+\section{\scshape La desigualdad de Hörmander y soluciones en $L^2$}
+
+El resultado de principal utilidad para relacionar las normas en $L^2$ de una función test y su imagen por un operador diferencial será el siguiente,
+
+\begin{theorem}[Hörmander] Sae $\Omega \subset \R^n$ un abierto acotado y $\L = p(D)$ un operador diferencial. Existe entonces $C > 0$ tal que
+\[
+\|\L\varphi\| \geq C\|\varphi\|
+\]
+para toda $\varphi \in \mathscr{C}_c^\infty(\Omega)$, y ésta depende sólamente de los términos de orden máximo de $p$ y el diámetro de $\Omega$.
+\end{theorem}
+\begin{proof} \todo{Hacer!}
+\end{proof}
+
+A partir de esta desigualdad, se obtiene inmediatamente la existencia de soluciones de $(1)$ en $L^2$ para abiertos acotados,
+
+\begin{corollary} Sea $\Omega \subset \R^n$ un abierto acotado. Dada $g \in L^2(\Omega)$ y $\L = p(D)$ un operador diferencial, existe una solución $u \in L^2(\Omega)$ a la ecuación
+\[
+\L u = g.
+\]
+\end{corollary}
+\begin{proof} Por la desigualdad de Hörmander, la (co)restricción de un operador diferencial a $\C_c^\infty(\Omega)$ resulta una función lineal inyectiva con inversa continua respecto de la norma en $L^2(\Omega)$. Notando $E := \im \L^\ast$, esto significa que el operador
+\[
+(\L^\ast)^{-1} : \L^\ast \varphi \in E \mapsto \varphi \in L^2(\Omega)
+\]
+está bien definido y resulta continua con respecto a la norma (en el caso de $E$, inducida) de $L^2(\Omega)$. Componiendo con el funcional representado por $g$, se obtiene un funcional
+\[
+\eta  : \L^\ast\varphi \in E \mapsto \ip{\varphi, g} \in \R,
+\]
+que tiene una única extensión $\widetilde{\eta}$ a $\overline{E}$, ya que $\overline{E}$ es de Hilbert al ser un subespacio cerrado de $L^2(\Omega)$. Por el teorema de representación de Riesz, existe entonces $u \in \overline{E} \subset L^2(\Omega)$ tal que
+\[
+\ev{g,\varphi} = (\varphi,g) = (u,\L^\ast\varphi) = \ev{u,\L^\ast\varphi} = \ev{\L u, \varphi}
+\]
+para toda $\varphi \in \C_c^\infty(\Omega)$, y esto prueba finalmente que $\L u = g$.
+\end{proof}
+
+\section{\scshape La relación entre $\sop u$ y $\sop \L u$}
+
+\begin{remark} Si $\L = p(D)$ es un operador diferencial y $\eps > 0$, entonces
+\[
+\widetilde{\L}_\eps(\psi) = e^{\eps x_1}\L(e^{-\eps x_1}\psi)
+\]
+es un operador diferencial. Basta verlo para $\L = D^\alpha$, pues la asignación $\L \mapsto \widetilde{\L}_\eps$ es lineal. Procedemos por inducción en $\alpha_1$, donde el caso base es cierto pues $\widetilde{D^{(0,\alpha')}} = D^{(0,\alpha')}$ . Si $\alpha_1 > 0$ y $\widetilde{D^{(\alpha_1 - 1, \alpha')}} = q(D)$
+\begin{align*}
+e^{\eps x_1}D^\alpha(e^{-\eps x_1}\psi) &= e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}\left(\frac{\partial}{\partial x_1}(e^{-\eps x_1}\psi)\right)\\
+&= e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}\left(-\eps e^{-\eps x_1}\psi + e^{-\eps x_1}\frac{\partial}{\partial x_1}\psi\right)\\
+&= e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}(e^{-\eps x_1}(-\eps\psi)) + e^{\eps x_1}D^{(\alpha_1 - 1, \alpha')}(e^{-\eps x_1}\partial_1\psi)\\
+&= -\eps q(D)(\psi) + q(D)(\delta_1\psi) = -\eps q(D)(\psi) + (X_1q)(D)(\psi).
+\end{align*}
+Más todavía, los términos de orden mayor de $\widetilde{\L}_\eps$ coinciden con los de $\L$ pues
+\[
+e^{\eps x_1}D^\alpha (e^{-\eps x_1}\varphi) = e^{\eps x_1}\sum_{\beta \leq \alpha}{\alpha \choose \beta}D^\alpha e^{-\eps x_1}D^{\alpha - \beta}\varphi,
+\]
+y el término de orden máximo de esta expresión es $e^{\eps x_1}D^{\mathbf{0}}e^{-\eps x_1}D^{\alpha}\varphi = D^\alpha\varphi$. De este modo \guill{podemos tomar la misma constante que para $\L$ en la desigualdad de Hörmander}.
+\end{remark}
+
+\begin{proposition} \label{sharp-hormander-bound}Sea $\Omega \subset \R^n$ un abierto acotado y $\L = p(D)$ un operador diferencial. Existe $C' > 0$ tal que para todo $\eta \in \R$ es
+\[
+\int_{\Omega}e^{\eta x_1}|\L \varphi|^2 \geq C \int_{\Omega}e^{\eta x_1}|\varphi|^2
+\]
+para toda $\varphi \in \C_c^\infty(\Omega)$.
+\end{proposition}
+\begin{proof} Sea $C > 0$ una constante que satisfaga la desigualdad de Hörmander para $\L$. Por la observación anterior, podemos tomar $C$ de forma que para cada $\eta \in \R$ poniendo $\eps = \eta/2$ es
+\[
+\|\widetilde{\L}_\eps( e^{\eps x_1}\varphi)\| \geq C \|e^{\eps x_1}\varphi\|.
+\]
+Elevando al cuadrado esta desiguadad, se obtiene precisamente que
+\[
+\int_{\Omega}e^{\eta x_1}|\L \varphi|^2 \geq C \int_{\Omega}e^{\eta x_1}|\varphi|^2.
+\]
+\end{proof}
+
+\begin{corollary} Si $\L = p(D)$ es un operador diferencial y $\varphi \in C_c^\infty(\R^n)$ es tal que $\L \varphi$ se anula en un semiespacio abierto $H$, entonces $\varphi$ se anula en $H$.
+\end{corollary}
+\begin{proof} Veámoslo primero para $H_0 := \{x_1 > 0\}$. Basta ver que $\|\varphi\|_{H_0} = \|\varphi\|_{\Omega \cap H_0} = 0$. En efecto, si $\Omega \supset \sop \varphi$, por la Proposición \ref{sharp-hormander-bound} es
+\begin{align*}
+0 &\leq C\int_{H_0 \cap \Omega}|\varphi|^2 \leq C\int_{H_0\cap \Omega}e^{\eta x_1}|\varphi|^2 \leq \int_{\Omega}e^{\eta x_1}|\L \varphi|^2 - C\int_{H_0^c \cap \Omega}e^{\eta x_1}|\varphi|^2\\
+&= \int_{H_0^c \cap \Omega}e^{\eta x_1}|\L \varphi|^2 - C\int_{H_0^c \cap \Omega}e^{\eta x_1}|\varphi|^2, 
+\end{align*}
+y el lado derecho tiende a cero cuando $\eta \to \infty$. 
+
+\todo{Revisar!}Si ahora $H$ es un hiperplano cualquiera, rotando y trasladando obtenemos un difeomorfismo suave $\psi : \R^n \to \R^n$ que envía $H_0$ a $H$. Como $\sop \L (\varphi \circ \psi) \subset \sop (\L \varphi) \circ \psi$, sabemos que $\L \varphi \circ \psi$ se anula en $H_0$, y por lo tanto así lo hace $\varphi \circ \psi$. Esto concluye la demostración.
+\end{proof}
+
+\begin{corollary} Sea $\L = p(D)$ un operador diferencial y $\varphi \in C_c^\infty(\R^n)$. Si $\L \varphi$ está soportada en $B_r(0)$, entonces $\varphi$ está soportada en $B_r(0)$.
+\end{corollary}
+\begin{proof} Podemos escribir a $B_r(0)$ como intersección de semiespacios. En el complemento de cada uno, sabemos que $\L \varphi$ se anula, así que $\varphi$ también lo hace.
+\end{proof}
+
+\begin{proposition}Sea $\L = p(D)$ un operador diferencial y $f \in L^2(\R^n)$ de soporte compacto. Si $\L f$ está soportada en $B_r(0)$, entonces $f$ está soportada en $B_r(0)$.
+\end{proposition}
+\begin{proof} Basta ver que existen $(f_\eps)_{\eps > 0} \subset L^2(\R^n)$ tales que $\sop f_\eps \subset B_{r+\eps}(0)$ y $f_\eps \xrightarrow{L^2} f$. En tal caso, si $x \not \in \overline{B_r(0)}$ entonces existen $\mu > 0$ y $U \ni x $ abierto tales que $x \in U \subset (B_{r+\mu}(0))^c$, por lo que
+\[
+\|f\|_U = \lim_{\eps \to 0}\|f_\eps\|_U = 0,
+\]
+dado que $\sop f_\eps \subset U^c$ para $\eps \ll \mu$.
+
+Dado $\chi$ un núcleo regularizante, definimos $f_\eps = f \ast \chi_\eps$. Esto garantiza la convergencia: veamos para terminar que $f_\eps$ está soportada en $B_{r+\eps}(0)$. Como esta es ahora una función suave, basta ver que $\L f_\eps$ está soportada en $B_{r+\eps}(0)$. Por definición, es
+\[
+\L f \ast \chi_\eps(z) = \ev{\L f,\chi_\eps(z-\cdot)} = \ev{f,\L^\ast\chi_\eps(z-\cdot)} = \ev{f,(\L\chi_\eps)(z-\cdot)} = f \ast (\L \chi_\eps
+)(z) = \L f_\eps(z),
+\]
+así que si $\L f_\eps(z) \neq 0$, luego $\chi_\eps(z. -)$ que tiene soporte en $B_\eps(z)$ no está contenido fuera de $B_r(0)$, y así $z \in B_{r+\eps}(0)$\todo{Pasar esto directamente al teorema de convoluciones y soporte, ver si además se puede probar la diferenciabilidad}
+\end{proof}
+
+\section{\scshape Aproximación y soluciones en $L^2_{loc}$}
+
+\begin{lemma} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Si $g \in L^2(B_R(0))$, existe $C > 0$ tal que
+\[
+|(\varphi,g)_{B_r(0)}| \leq C\|\L \varphi\|_{B_R(0)}
+\]
+para toda $\varphi \in \C_c^\infty(\R^n)$.
+\end{lemma}
+\begin{proof} Si $\L \varphi = 0$ en $B_R(0)$, sabemos que $\varphi = 0$ allí y por lo tanto $(\varphi,g)_{B_r(0)} = 0$. Si no, existe $\psi \in L^2(B_R(0))$ tal que $\L \psi = \L \varphi$ y 
+\[
+\|\psi\| = (\psi,\L \varphi)
+\]
+\end{proof}
+
+\begin{lemma} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Dada $g \in B_R(0)$, existe $w\in L^2(B_R(0))$ tal que
+\[
+(\varphi,g)_{B_r(0)} = (\L \varphi, w)_{B_R(0)}
+\]
+para toda $\varphi \in \C_c^\infty(\R^n)$.
+\end{lemma}
+\begin{proof} el lema probaría \todo{pero no.. o si?}que la composición
+\[
+E \xrightarrow{\L^{-1}} \C_c^\infty(B_R(0)) \xrightarrow{\cdot \ |_{B_r(0)}} \C_c^\infty(B_r(0)) \xrightarrow{(g,-)}  \R
+\]
+es define un funcional continuo. Éste se extendería así a $\overline{E}$, que es de Hilbert, y por el teorema de representación de Riesz existiría $w \in \overline{E} \subset L^2{B_R(0)}$ tal que
+\[
+(\varphi,g)_{B_r(0)} = (\L \varphi, w)_{B_R(0)}
+\]
+para toda $\varphi \in \C_c^\infty(B_R(0))$. \todo{Y porqué esto alcanza para todas las funciones suaves de soporte compacto en todo el espacio????} 
+\end{proof}
+
+\begin{proposition} \label{aprox} Sean $0 < r < r' < R$. Dado un operador diferencial $\L = p(D)$ y $v \in L^2(B_r(0))$ tal que $\L v = 0$ en $B_{r'}(0)$, existe una sucesión $(v_j)_{j \geq 1} \subset L^2(B_R(0))$ que satisface $\L v_j = 0$ en $B_R(0)$ y 
+\[
+v_j \xrightarrow{L^2(B_r(0))} v.
+\]
+\end{proposition}
+
+\begin{theorem} \label{teo-sol-l2-loc}Sea $\L = p(D)$ un operador diferencial. Dada $g \in L^2_{loc}(\R^n)$, existe $u \in L^2_{loc}(\R^n)$ tal que $\L u = g$.
+\end{theorem}
+\begin{proof} Sea $u_1 \in L^2(B_2(0))$ una solución de $\L u = g$ allí. Inductivamente construiremos $u_{k+1}$ del siguiente modo: tomamos una solución $w$ de $\L u = g$ en $L^2(B_{k+2}(0))$, de forma que $\L (u_k-w) = 0$ en $B_{k+1}(0)$. Por la Proposición $\tpaint{\ref{aprox}}$, existe $v \in L^2(B_{k+2}(0))$ tal que $\L v = 0$ y $\|u_k-w-v\|_{B_{k}(0)} < 1/2^k$. Definiendo $u_{k+1} := v+w$, la sucesión $(u_k)_{k \geq 1}$ satisface
+\begin{itemize}
+\item $\L u_k = g$ en $B_{k+1}(0)$, y
+\item $\|u_{k+1} - u_k\|_{B_k(0)} < 1/2^k$.
+\end{itemize} 
+
+Veamos que $(u_k)_{k \geq 1}$ es de Cauchy en $L_{loc}^2(\R^n)$. Fijemos $K \subset \R^n$ compacto. Existe entonces $k_0 \in \N$ tal que $B_k(0) \supset K$ si $k > k_0$. Por lo tanto, si $m > n > k$ es
+\begin{align*}
+\|u_m-u_n\|_K &\leq \|u_m-u_{m-1}\|_K + \dots + \|u_{n+1}-u_n\|_K\\
+&\leq \|u_m-u_{m-1}\|_{B_m(0)} + \dots + \|u_{n+1}-u_n\|_{B_n(0)}\\
+&\leq 1/2^{m-1} + \dots + 1/2^n \leq \sum_{j \geq n}1/2^j,
+\end{align*}
+y esto tiende a cero si $n \to \infty$. Para terminar, veamos que $u := \lim_{k \to \infty} u_k$ satisface $\L u = g$. En efecto, si $\varphi \in \C_c^\infty(\R^n)$ entonces
+\begin{align*}
+\ev{\L u, \varphi} &= (u,\L^\ast\varphi)_{\sop \varphi} = \lim_{k \to \infty}(u_k,\L^\ast\varphi)_{\sop \varphi} = \lim_{k \to \infty}(u_k,\L^\ast\varphi)_{B_{k+1}(0)}\\
+&= \lim_{k \to \infty}(g,\L^\ast\varphi)_{B_{k+1}(0)} = (g,\L^\ast\varphi)\\
+&= \ev{\L g, \varphi}.
+\end{align*}
+\end{proof}
+
+\section{\scshape Existencia de soluciones fundamentales y consecuencias}
+
+\begin{lemma} La función $H : \R^n \to \R$ definida por $H(x_1,\dots, x_n) = \prod_{i=1}^n \chi_{\{x_i > 0\}}$ es un elemento de $L_{loc}^2(\R^n)$ y satisface
+\[
+\frac{\partial^n}{\partial x_1 \cdots \partial x_n} H = \delta_0.
+\]
+\end{lemma}
+\begin{proof} Si $\varphi \in \test$, es
+\begin{align*}
+\int_0^\infty \frac{\partial}{\partial x_i}\varphi(x_1,\dots, x_i,\dots,x_n)dx_i &= \lim_{t \to \infty} \varphi(x_1,\dots,\overbrace{t}^i,\dots,x_n) - \varphi(x_1, \dots,0,\dots,x_n)\\
+& = - \varphi(x_1, \dots,0,\dots,x_n),
+\end{align*}
+ya que $\varphi$ tiene soporte compacto. Por lo tanto, es
+\begin{align*}
+\left\ev{\frac{\partial^n}{\partial x_1 \cdots \partial x_n} H,\varphi\right} &= \left\ev{H,(-1)^n \cdot \frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi\right} = (-1)^n\int_{\R^n}\frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi \cdot dx_1 \cdots dx_n\\
+&= (-1)^n\int_0^\infty \cdots \ \ \int_0^\infty\frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi \cdot dx_1 \cdots dx_n\\ &= (-1)^n(-1)^n\varphi(0,\dots,0) = \varphi(0) = \ev{\delta_0,\varphi}.
+\end{align*}
+\end{proof}
+
+\begin{theorem}[Malgrange-Ehrenpreis] Todo operador diferencial lineal (no nulo) con coeficientes constantes  admite una solución fundamental.
+\end{theorem}
+\begin{proof} Sea $\L = p(D)$ un operador diferencial. Por el $\tpaint{Teorema \ref{teo-sol-l2-loc}}$, existe $u \in L^2_{loc}(\R^n)$ tal que $\L u = H$. Considerando la distribución $\frac{\partial^n}{\partial x_1 \cdots \partial x_n} u$ se tiene efectivamente que
+\[
+\L \left(\frac{\partial^n}{\partial x_1 \cdots \partial x_n} u\right) = \frac{\partial^n}{\partial x_1 \cdots \partial x_n} \L u = \frac{\partial^n}{\partial x_1 \cdots \partial x_n} H = \delta_0.
+\]
+\end{proof}
+\todo{definir convoluciones, dar propiedades, y definir soporte, teo 4.1.1 Hörmander}
+\todo{Agregar la existencia de soluciones, revisar que son suaves si el dato es suave}
+\end{document}
