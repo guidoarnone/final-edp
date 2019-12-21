@@ -157,7 +157,15 @@ El objetivo de esta presentación es probar el teorema de Malgrange-Ehrenpreis, 
 tiene una solución en $\dist$. De hecho, si $f$ es suave la solución obtenida también lo es. 
 \subsection{Sobre la Notación}
 
-Dado $U \subset \R^n$, notaremos $\ip{,}$ y $\|\cdot\|$ al producto interno y norma de $L^2(U)$ respectivamente. Indicaremos el dominio sólo cuando no se deduzca del contexto. La expresión \guill{operador diferencial} y el símbolo $\L$ referirán siempre a un operador diferencial parcial lineal (no nulo) con coeficientes constantes, y escribiremos $q(D)$ al operador asociado a un polinomio $q \in \R[X_1, \dots, X_n]$.
+Si $q = \sum_{\alpha}c_\alpha x^\alpha\in \R[X_1, \dots, X_n]$ es un polinomio de grado $m$, escribiremos
+\[
+|q|_k = \max\{|c_\alpha| : |\alpha| = k\}
+\]
+para cada $k \leq m$.
+
+Dado $U \subset \R^n$, notaremos $\ip{,}$ y $\|\cdot\|$ al producto interno y norma de $L^2(U)$ respectivamente. Indicaremos el dominio sólo cuando no se deduzca del contexto. 
+
+La expresión \guill{operador diferencial} y el símbolo $\L$ referirán siempre a un operador diferencial parcial lineal (no nulo) con coeficientes constantes, y escribiremos $q(D)$ al operador asociado a un polinomio $q \in \R[X_1, \dots, X_n]$. 
 
 \section{\scshape La desigualdad de Hörmander y soluciones en $L^2$}
 
@@ -169,7 +177,18 @@ El resultado de principal utilidad para relacionar las normas en $L^2$ de una fu
 \]
 para toda $\varphi \in \mathscr{C}_c^\infty(\Omega)$, y ésta depende sólamente de los términos de orden máximo de $p$ y el diámetro de $\Omega$.
 \end{theorem}
-\begin{proof} \todo{Hacer!}
+\begin{proof} Notemos $\rho := \sup_{\Omega}\|x\|$. Para cada $j \in \nat{n}$, definimos $p_j(D)$ como el operador diferencial que satisface la ecuación
+\[
+p(D)(x_j\varphi) = x_jp(D)\varphi + p_j(D)\varphi
+\]
+para toda función $\varphi \in \C_c^\infty(\R^n)$. Como dado $\alpha$ un multiíndice y $\varphi \in \C_c^\infty(\R^n)$ es
+\[
+D^\alpha x_j\varphi = x_j \cdot \sum_{\beta \leq \alpha, \beta_1 = 0} {\alpha \choose \beta} D^{\alpha - \beta}\varphi + \sum_{\beta \leq \alpha, \beta_1 = 1} {\alpha \choose \beta}D^{\alpha - \beta}\varphi,
+\]
+el operador $p_j(D)$ está bien definido y viene inducido por un polinomio, que notaremos $p_j$. Además, de la ecuación anterior se observa que $p_j(D)$ es cero si y sólo si $p$ no tiene monomios que contengan a la variable $X_j$. Dicho de otra forma, el operador diferencial $p_j(D)$ es nulo si y sólo si \guill{en $p(D)$ no hay derivadas con respecto a la $j$-ésima variable}.
+
+De ser no nulo, el orden de $p_j$ debe ser menor al de $p$, y existe $j \in \nat{n}$ tal que $p_j$ es de orden exactamente $m-1$ y $|p_j|_{m-1} \geq |p|_m$.\todo{¿por qué?}
+\todo[inline]{Terminar!}
 \end{proof}
 
 A partir de esta desigualdad, se obtiene inmediatamente la existencia de soluciones de $(1)$ en $L^2$ para abiertos acotados,
@@ -249,24 +268,24 @@ y el lado derecho tiende a cero cuando $\eta \to \infty$.
 
 \begin{proposition}Sea $\L = p(D)$ un operador diferencial y $f \in L^2(\R^n)$ de soporte compacto. Si $\L f$ está soportada en $B_r(0)$, entonces $f$ está soportada en $B_r(0)$.
 \end{proposition}
-\begin{proof} Basta ver que existen $(f_\eps)_{\eps > 0} \subset L^2(\R^n)$ tales que $\sop f_\eps \subset B_{r+\eps}(0)$ y $f_\eps \xrightarrow{L^2} f$. En tal caso, si $x \not \in \overline{B_r(0)}$ entonces existen $\mu > 0$ y $U \ni x $ abierto tales que $x \in U \subset (B_{r+\mu}(0))^c$, por lo que
+\begin{proof} Basta ver que existen $(f_\eps)_{\eps > 0} \subset L^2(\R^n)$ tales que $\sop f_\eps \subset B_{r+\eps}(0)$ y $f_\eps \xrightarrow{L^2} f$. En tal caso, si $\varphi \in \C_c^\infty(\R^n)$ está soportada en un compacto $K \subset B_r(0)^c$, existe $\mu > 0$ tal que $K \subset B_{r+\mu}(0)^c$ y por lo tanto
 \[
-\|f\|_U = \lim_{\eps \to 0}\|f_\eps\|_U = 0,
+(f,\varphi) = \lim_{\eps \to 0}(f_\eps,\varphi) = 0
 \]
-dado que $\sop f_\eps \subset U^c$ para $\eps \ll \mu$.
+ya que $\sop f_\eps \cap K = \varnothing$ para $\eps \ll \mu$.
 
-Dado $\chi$ un núcleo regularizante, definimos $f_\eps = f \ast \chi_\eps$. Esto garantiza la convergencia: veamos para terminar que $f_\eps$ está soportada en $B_{r+\eps}(0)$. Como esta es ahora una función suave, basta ver que $\L f_\eps$ está soportada en $B_{r+\eps}(0)$. Por definición, es
+Dado $\chi$ un núcleo regularizante, definimos $f_\eps = f \ast \chi_\eps$. Esto garantiza la convergencia: veamos para terminar que $f_\eps$ está soportada en $B_{r+\eps}(0)$. Como éstas son ahora una funciones suaves, basta ver que $\L f_\eps$ está soportada en $B_{r+\eps}(0)$ para cada $\eps >0$. Por definición es
 \[
 \L f \ast \chi_\eps(z) = \ev{\L f,\chi_\eps(z-\cdot)} = \ev{f,\L^\ast\chi_\eps(z-\cdot)} = \ev{f,(\L\chi_\eps)(z-\cdot)} = f \ast (\L \chi_\eps
 )(z) = \L f_\eps(z),
 \]
-así que si $\L f_\eps(z) \neq 0$, luego $\chi_\eps(z. -)$ que tiene soporte en $B_\eps(z)$ no está contenido fuera de $B_r(0)$, y así $z \in B_{r+\eps}(0)$.
+así que si $\L f_\eps(z) \neq 0$ necesariamente $\sop \chi_\eps(z - \cdot) \subset B_\eps(z)$ no puede estar contenido fuera de $B_r(0)$, y esto implica que $z \in B_{r+\eps}(0)$.
 
 \end{proof}
 
 \section{\scshape Aproximación y soluciones en $L^2_{loc}$}
 
-\begin{lemma} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Si $g \in L^2(B_R(0))$, existe $C > 0$ tal que
+\begin{lemma} \label{lema-cota-lp-r-R}Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Si $g \in L^2(B_r(0))$, existe $C > 0$ tal que
 \[
 |(\varphi,g)_{B_r(0)}| \leq C\|\L \varphi\|_{B_R(0)}
 \]
@@ -275,10 +294,10 @@ para toda $\varphi \in \C_c^\infty(\R^n)$.
 \begin{proof} Si $\L \varphi = 0$ en $B_R(0)$, sabemos que $\varphi = 0$ allí y por lo tanto $(\varphi,g)_{B_r(0)} = 0$. Si no, existe $\psi \in L^2(B_R(0))$ tal que $\L \psi = \L \varphi$ y 
 \[
 \|\psi\| = (\psi,\L \varphi)
-\]
+\]\todo{?????}
 \end{proof}
 
-\begin{lemma} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Dada $g \in B_R(0)$, existe $w\in L^2(B_R(0))$ tal que
+\begin{lemma} \label{lema-rep} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Dada $g \in L^2(B_r(0))$, existe $w\in L^2(B_R(0))$ tal que
 \[
 (\varphi,g)_{B_r(0)} = (\L \varphi, w)_{B_R(0)}
 \]
@@ -295,12 +314,35 @@ es define un funcional continuo. Éste se extendería así a $\overline{E}$, que
 para toda $\varphi \in \C_c^\infty(B_R(0))$. \todo{Y porqué esto alcanza para todas las funciones suaves de soporte compacto en todo el espacio????} 
 \end{proof}
 
-\begin{proposition} \label{aprox} Sean $0 < r < r' < R$. Dado un operador diferencial $\L = p(D)$ y $v \in L^2(B_r(0))$ tal que $\L v = 0$ en $B_{r'}(0)$, existe una sucesión $(v_j)_{j \geq 1} \subset L^2(B_R(0))$ que satisface $\L v_j = 0$ en $B_R(0)$ y 
+\begin{proposition} \label{aprox} Sean $0 < r < r' < R$. Dado un operador diferencial $\L = p(D)$ y $v \in L^2(B_{r'}(0))$ tal que $\L v = 0$ en $B_{r'}(0)$, existe una sucesión $(v_j)_{j \geq 1} \subset L^2(B_R(0))$ que satisface $\L v_j = 0$ en $B_R(0)$ y 
 \[
 v_j \xrightarrow{L^2(B_r(0))} v.
 \]
 \end{proposition}
-\begin{proof} \todo{Hacer!}
+\begin{proof} Supongamos primero que $v$ es suave y de soporte compacto. Notando
+\[
+S = \{ w|_{B_r(0)} : w \in L^2(B_R(0)), \ \L w = 0 \text{ en } B_R(0)\} \leq L^2(B_r(0)),
+\]
+basta ver que $S$ es denso en $T := \langle S, v|_{B_r(0)} \rangle$. A su vez, para ello alcanza probar que un funcional $f : T \to \R$ que se anula en $S$ es nulo. Un tal funcional se extiende a $\overline{T}$ y por el teorema de representación de Riesz, existe cierta $g \in L^2(B_r(0))$ tal que $f \equiv (g,-)$. 
+
+En definitiva, es suficiente probar que si $g \in L^2(B_r(0))$ es tal que 
+\[
+\ip{g,w}_{B_r(0)} = 0
+\]
+para toda $w \in S$, entonces $\ip{g,v}_{B_r(0)} = 0$. Por el Lema $\tpaint{\ref{lema-rep}}$, sabemos que existe  $w \in L^2(B_R(0))$ tal que $(\varphi,g)_{B_r(0)} = (\L \varphi, w)_{B_R(0)}$ para toda $\varphi \in \C_c^\infty(\R^n)$. Considerando las extensiones por cero $\widetilde{g},\widetilde{w} \in L^2(\R^n)$ de $g$ y $w$ respectivamente, por definición es
+\[
+\ev{\L^\ast \widetilde{w},\varphi} = (\widetilde{w},\L \varphi) = (w,\L \varphi)_{B_R(0)} = (g,\varphi)_{B_r(0)} = \ev{ g, \varphi}
+\]
+y por lo tanto $\L^\ast \widetilde{w} = \widetilde{g}$. Como $\widetilde{g}$ tiene soporte en $B_r(0)$ y $\widetilde{w}$ tiene soporte compacto, luego $\widetilde{w}$ está soportada en $B_r(0)$. En particular $w$ está soportada en $B_r(0)$, y como $\L v$ se anula allí, es 
+\[
+(v,g)_{B_r(0)} = (\L v, w)_{B_R(0)} = (\L v, w)_{B_r(0)} = 0.
+\]
+
+Para terminar, veamos que el resultado sigue siendo cierto cuando $v$ no es suave de soporte compacto. Convolucionando con $\chi_\eps$ donde $\chi$ es una aproximación de la identidad, conseguimos $v_\eps \to v$ en $L^2(B_R(0))$. Eventualmente para $\eps \ll 1$ podemos achicar\footnote{Como $\sop \L v_\eps = \sop \L v \ast \chi_\eps = \sop \L v + B_\eps(0)$ y $B_{r'}(0) \subset (\sop \L v)^c$, entonces $B_{r'-\eps}(0) \subset (\sop \L v_\eps)^ c$.} $r'$ de tal modo que $\L v_\eps$ se anule en una bola de radio $\eta_\eps \in (r,r']$, y aplicar el resultado para funciones suaves, consiguiendo así sucesiones $v_{j}^i \to v_{1/i}$ en $L^2(B_r(0))$ tales que $\L v_j^i = 0$ en $B_R(0)$ para cada $i \geq 1$. Ahora, para cada $i \geq 1$ existe $j_i \in \N$ tal que $\|v_{j_i}^i - v_{1/i}\| < 1/i$ y entonces
+\[
+\|v - v_{j_i}^i\| \leq \|v-v_{i/1}\| + \|v_{j_i}^i - v_{1/i}\| \leq \|v-v_{i/1}\| + 1/i \to 0.
+\]
+En consecuencia, la sucesión $(v_{j^i}^i)_{i \geq 1}$ satisface la condición buscada.
 \end{proof}
 
 \begin{theorem} \label{teo-sol-l2-loc}Sea $\L = p(D)$ un operador diferencial. Dada $g \in L^2_{loc}(\R^n)$, existe $u \in L^2_{loc}(\R^n)$ tal que $\L u = g$.
@@ -393,7 +435,8 @@ ya que
 para cada $\varphi \in \C_c^\infty(\R^n)$. Por lo tanto, una solución para $\tpaint{(2)}$ es
 \[
 v(x) = u \ast g(x) = \ev{u, g(x - \cdot)} = \int_{0}^{+\infty}g(x-tb)e^{\beta t}dt.
-\] 
+\]
+\qed
 \end{example}
 
 \subsection{Apéndice: sobre la convolución de distribuciones}
@@ -410,7 +453,7 @@ v(x) = u \ast g(x) = \ev{u, g(x - \cdot)} = \int_{0}^{+\infty}g(x-tb)e^{\beta t}
 \begin{definition} El \textit{soporte} de una distribución $T \in \dist(U)$ es el abierto maximal\footnote{Esto está bien definido, y más aún se puede verificar que el soporte es el complemento de la unión de los abiertos donde $T$ se anula.} en $V$ tal que $T$ se anula en $V^c$. 
 \end{definition}
 
-\begin{theorem}[\cite{H}, Theorem 4.1.1]  Si $T \in \dist$ y $\varphi \in \test$, entonces $\sop T \ast \varphi \subset \sop T + \sop \varphi$ y
+\begin{theorem}[\cite{H}, Theorem 4.1.1]  Si $T \in \dist$ y $\varphi \in \test$, entonces $T \ast \varphi$ es una función suave de soporte compacto con $\sop T \ast \varphi \subset \sop T + \sop \varphi$ y
 \[
 D^\alpha (T \ast \varphi ) = (D^\alpha T) \ast \varphi = T \ast (D^\alpha \varphi)
 \]
