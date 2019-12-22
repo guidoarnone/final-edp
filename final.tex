@@ -187,8 +187,48 @@ D^\alpha x_j\varphi = x_j \cdot \sum_{\beta \leq \alpha, \beta_1 = 0} {\alpha \c
 \]
 el operador $p_j(D)$ está bien definido y viene inducido por un polinomio, que notaremos $p_j$. Además, de la ecuación anterior se observa que $p_j(D)$ es cero si y sólo si $p$ no tiene monomios que contengan a la variable $X_j$. Dicho de otra forma, el operador diferencial $p_j(D)$ es nulo si y sólo si \guill{en $p(D)$ no hay derivadas con respecto a la $j$-ésima variable}.
 
-De ser no nulo, el orden de $p_j$ debe ser menor al de $p$, y existe $j \in \nat{n}$ tal que $p_j$ es de orden exactamente $m-1$ y $|p_j|_{m-1} \geq |p|_m$.\todo{¿por qué?}
-\todo[inline]{Terminar!}
+De ser no nulo, el orden de $p_j$ debe ser menor al de $p$, y existe $j \in \nat{n}$ tal que $p_j$ es de orden exactamente $m-1$ y $|p_j|_{m-1} \geq |p|_m$.\todo{¿por qué?} Esto nos dice que para terminar la demostración alcanzaría probar que para todo $j \in \nat{n}$ es
+\[
+\|p_j(D)\varphi\| \leq 2mA\|p(D)\varphi\| \tag{$\ast$}.
+\]
+En efecto, de valer $\tpaint{$(\ast)$}$ sería
+\[
+\|(((p_{j_1})_{j_2})\cdots)_{j_k}(D)\varphi\| \leq 2A \cdots 2(m-1)A2mA\|p(D)\varphi\| = m!(2A)^m \|p(D)\varphi\|
+\]
+con $q = (((p_{j_1})_{j_2})\cdots)_{j_k}$ de grado $0$, así que
+\[
+\|q\|_0 \geq \cdots \geq \|p\|_m
+\]
+y entonces
+\[
+\|p(D)\varphi\| \geq \frac{1}{m!(2A)^m}\|q\varphi\| = \frac{1}{m!(2A)^m}\|q\|_0 \|\varphi\| \geq \frac{\|p\|_m}{m!(2A)^m}\|\varphi\|. 
+\]
+
+
+Para terminar, fijemos $j \in \nat{n}$ y veamos $\tpaint{($\ast$)}$ por inducción en $m$. Si $m = 0$, entonces $P_j(D)$ es nulo y la desigualdad se satisface. Supongamos ahora que $m > 1$ y el enunciado es cierto para polinomios de grado $m-1$. La desigualdad junto con la definición de $p_j(D)$ implican
+\[
+\|p(D)(x_i\varphi)\| \leq (2m+1)A\|p(D)\varphi\| \tag{$\lozenge$}
+\]
+para cualquier $i \in \nat{n}$. Aplicando esto a $p_j$, se obtiene entonces 
+\[
+\|p_j(D)\varphi\| \leq (2m-1)A\|p_j(D)\varphi\|.
+\]
+Ahora, observemos\footnote{Usamos aquí que los operadores diferenciales conmutan entre sí, y en particular es $\|q(D)\varphi\|^2 = \|p(D)^\ast \varphi\|^2$.} que
+\[
+\ip{p(D)(x_j\varphi),p_j(D)\varphi} = \ip{x_jp(D)\varphi,p_j(D)\varphi} + \|p_j(D)\varphi\|^2,
+\]
+y entonces
+\begin{align*}
+\|p_j(D)\varphi\|^2 &= \ip{p(D)(x_j\varphi),p_j(D)\varphi} - \ip{x_jp(D)\varphi,p_j(D)\varphi}\\
+&= \ip{p_j(D)^\ast(x_j\varphi),p(D)^\ast\varphi} - \ip{x_jp(D)\varphi,p_j(D)\varphi}.
+\end{align*}
+Aplicando $\tpaint{($\lozenge$)}$ a $p_j(D)^\ast$ es
+\begin{align*}
+\|p_j(D)\varphi\|^2&\leq (2m-1)A\|p_j(D)^\ast\varphi\|\|p(D)^\ast\varphi\| + \|x_jp(D)\varphi\|\|p_j(D)\varphi\|\\
+& \leq (2m-1)A\|p_j(D)\varphi\|\|p(D)\varphi\| + A\|p(D)\varphi\|\|p_j(D)\varphi\|\\
+& = 2mA\|p_j(D)\varphi\|\|p(D)\varphi\|,
+\end{align*}
+lo que concluye la demostración.
 \end{proof}
 
 A partir de esta desigualdad, se obtiene inmediatamente la existencia de soluciones de $(1)$ en $L^2$ para abiertos acotados,
