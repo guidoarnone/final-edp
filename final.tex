@@ -213,7 +213,7 @@ para cualquier $i \in \nat{n}$. Aplicando esto a $p_j$, se obtiene entonces
 \[
 \|p_j(D)\varphi\| \leq (2m-1)A\|p_j(D)\varphi\|.
 \]
-Ahora, observemos\footnote{Usamos aquí que los operadores diferenciales conmutan entre sí, y en particular es $\|q(D)\varphi\|^2 = \|p(D)^\ast \varphi\|^2$.} que
+Ahora, observemos\footnote{Usamos aquí que los operadores diferenciales conmutan entre sí, y en particular es $\|q(D)\varphi\|^2 = \|q(D)^\ast \varphi\|^2$.} que
 \[
 \ip{p(D)(x_j\varphi),p_j(D)\varphi} = \ip{x_jp(D)\varphi,p_j(D)\varphi} + \|p_j(D)\varphi\|^2,
 \]
@@ -246,7 +246,7 @@ está bien definido y resulta continua con respecto a la norma (en el caso de $E
 \[
 \eta  : \L^\ast\varphi \in E \mapsto \ip{\varphi, g} \in \R,
 \]
-que tiene una única extensión $\widetilde{\eta}$ a $\overline{E}$, ya que $\overline{E}$ es de Hilbert al ser un subespacio cerrado de $L^2(\Omega)$. Por el teorema de representación de Riesz, existe entonces $u \in \overline{E} \subset L^2(\Omega)$ tal que
+que tiene una única extensión $\widetilde{\eta}$ a $\overline{E}$, pues $\overline{E}$ es de Hilbert al ser un subespacio cerrado de $L^2(\Omega)$. Por el teorema de representación de Riesz, existe entonces $u \in \overline{E} \subset L^2(\Omega)$ tal que
 \[
 \ev{g,\varphi} = (\varphi,g) = (u,\L^\ast\varphi) = \ev{u,\L^\ast\varphi} = \ev{\L u, \varphi}
 \]
@@ -325,33 +325,45 @@ así que si $\L f_\eps(z) \neq 0$ necesariamente $\sop \chi_\eps(z - \cdot) \sub
 
 \section{\scshape Aproximación y soluciones en $L^2_{loc}$}
 
-\begin{lemma} \label{lema-cota-lp-r-R}Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Si $g \in L^2(B_r(0))$, existe $C > 0$ tal que
+\begin{definition} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Notaremos
+\[
+N_{r,R}^\L = \{v|_{B_r(0)} : v \in L^2(B_R(0)), \ \ \L v = 0\}
+\]
+al subespacio de $L^2(B_r(0))$ que consiste de restringir funciones que anulan a $\L$ en $L^2(B_R(0))$.
+\end{definition}
+
+\begin{lemma} \label{lema-cota-lp-r-R}Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Si $g \in (N_{r,R,\L})^\perp$, existe $C > 0$ tal que
 \[
 |(\varphi,g)_{B_r(0)}| \leq C\|\L \varphi\|_{B_R(0)}
 \]
 para toda $\varphi \in \C_c^\infty(\R^n)$.
 \end{lemma}
-\begin{proof} Si $\L \varphi = 0$ en $B_R(0)$, sabemos que $\varphi = 0$ allí y por lo tanto $(\varphi,g)_{B_r(0)} = 0$. Si no, existe $\psi \in L^2(B_R(0))$ tal que $\L \psi = \L \varphi$ y 
+\begin{proof} Si $\L \varphi = 0$ en $B_R(0)$, sabemos que $\varphi = 0$ allí y por lo tanto $(\varphi,g)_{B_r(0)} = 0$. Si no, existe $\psi \in L^2(B_R(0))$ tal que $\L \psi = \L \varphi$. Además, existe \todo{esto es lo que falta ver!!!} $C' > 0$ tal que $\|\psi\|_{B_R(0)} \leq C'\|\L \varphi\|_{B_R(0)}$ independiente de $\psi$ y $\varphi$ \todo{Y esto, si no, no anda}. Como $g \in (N_{r,R,\L})^\perp$, es
 \[
-\|\psi\| = (\psi,\L \varphi)
-\]\todo{?????}
+\ip{g,\varphi}_{B_r(0)} = \ip{g,\varphi-\psi}_{B_r(0)} + \ip{g,\psi}_{B_r(0)} = \ip{g,\psi}_{B_r(0)}
+\]
+y por lo tanto
+\[
+|(\varphi,g)_{B_r(0)}| = |\ip{g,\psi}_{B_r(0)}| \leq \|g\| \cdot \|\psi\|_{B_r(0)} \leq \|g\|C' \cdot \|\L \varphi\|_{B_R(0)},
+\]
+así que poniendo $C = \|g\|C'$ se obtiene la desigualdad.
 \end{proof}
 
-\begin{lemma} \label{lema-rep} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Dada $g \in L^2(B_r(0))$, existe $w\in L^2(B_R(0))$ tal que
+\begin{lemma} \label{lema-rep} Sean $0 < r < R$ y $\L = p(D)$ un operador diferencial. Dada $g \in (N_{r,R,\L})^\perp$, existe $w\in L^2(B_R(0))$ tal que
 \[
 (\varphi,g)_{B_r(0)} = (\L \varphi, w)_{B_R(0)}
 \]
 para toda $\varphi \in \C_c^\infty(\R^n)$.
 \end{lemma}
-\begin{proof} el lema probaría \todo{pero no.. o si?}que la composición
+\begin{proof} Consideremos $E = \{ \L\psi|_{B_R(0)} : \psi \in \C_c^\infty(\R^n)\}$ como subespacio de $L^2(B_R(0))$. El lema anterior nos dice que la aplicación 
 \[
-E \xrightarrow{\L^{-1}} \C_c^\infty(B_R(0)) \xrightarrow{\cdot \ |_{B_r(0)}} \C_c^\infty(B_r(0)) \xrightarrow{(g,-)}  \R
+\eta : \L \varphi \in E \mapsto \ip{\varphi,g}_{B_r(0)} \in \R
 \]
-es define un funcional continuo. Éste se extendería así a $\overline{E}$, que es de Hilbert, y por el teorema de representación de Riesz existiría $w \in \overline{E} \subset L^2{B_R(0)}$ tal que
+está bien definida, y más aún define un funcional continuo. En particular podemos extenderlo a un funcional $\widetilde{\eta} : \overline{E} \subset L^2(B_R(0)) \to \R$ y como éste es de Hilbert, por el teorema de representación de Riesz existe $w \in \overline{E} \subset L^2(B_R(0))$ tal que $\widetilde{\eta} \equiv (w,-)_{B_R(0)}$. Esto termina de probar que
 \[
-(\varphi,g)_{B_r(0)} = (\L \varphi, w)_{B_R(0)}
+(\varphi,g)_{B_r(0)} = \eta(\L \varphi) = (w,\L \varphi)_{B_R(0)}
 \]
-para toda $\varphi \in \C_c^\infty(B_R(0))$. \todo{Y porqué esto alcanza para todas las funciones suaves de soporte compacto en todo el espacio????} 
+para toda $\varphi \in \C_c^\infty(\R^n)$.
 \end{proof}
 
 \begin{proposition} \label{aprox} Sean $0 < r < r' < R$. Dado un operador diferencial $\L = p(D)$ y $v \in L^2(B_{r'}(0))$ tal que $\L v = 0$ en $B_{r'}(0)$, existe una sucesión $(v_j)_{j \geq 1} \subset L^2(B_R(0))$ que satisface $\L v_j = 0$ en $B_R(0)$ y 
