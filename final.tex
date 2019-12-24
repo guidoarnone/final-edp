@@ -134,9 +134,9 @@ Una \textit{solución fundamental} para $\L$ es una distribución $T \in \dist$ 
 \[
 \L T = \delta_0
 \]
-con $\delta_0$ la delta de Dirac. Esto es reminiscente al la ecuación de Laplace,
+con $\delta_0$ la delta de Dirac. Esto es reminiscente a la ecuación de Laplace
 \[
-\Delta u = 0
+\Delta u = 0,
 \]
 para la cual existe una solución $\Phi \in \C^2(\R^n \setminus \{0\})$ definida por
 \[
@@ -231,12 +231,17 @@ Aplicando $\tpaint{($\lozenge$)}$ a $p_j(D)^\ast$ es
 lo que concluye la demostración.
 \end{proof}
 
-A partir de esta desigualdad, se obtiene inmediatamente la existencia de soluciones de $(1)$ en $L^2$ para abiertos acotados,
+A partir de esta desigualdad, se obtiene inmediatamente la existencia de soluciones de $(1)$ en $L^2$ para abiertos acotados, 
 
-\begin{corollary} Sea $\Omega \subset \R^n$ un abierto acotado. Dada $g \in L^2(\Omega)$ y $\L = p(D)$ un operador diferencial, existe una solución $u \in L^2(\Omega)$ a la ecuación
+\begin{corollary} \label{sol-l2}Sea $\Omega \subset \R^n$ un abierto acotado. Si $\L = p(D)$ es un operador diferencial, la ecuación 
 \[
 \L u = g.
 \]
+tiene solución en $L^2(\Omega)$ para toda $g \in L^2(\Omega)$. Más aún, existe una constante $C > 0$ que sólo depende de $\L$ y $\Omega$ de forma que
+\[
+\|u\| \leq C \|g\|
+\]
+para cada $u,g \in L^2(\Omega)$ tales que $\L u = g$.
 \end{corollary}
 \begin{proof} Por la desigualdad de Hörmander, la (co)restricción de un operador diferencial a $\C_c^\infty(\Omega)$ resulta una función lineal inyectiva con inversa continua respecto de la norma en $L^2(\Omega)$. Notando $E := \im \L^\ast$, esto significa que el operador
 \[
@@ -246,11 +251,17 @@ está bien definido y resulta continua con respecto a la norma (en el caso de $E
 \[
 \eta  : \L^\ast\varphi \in E \mapsto \ip{\varphi, g} \in \R,
 \]
-que tiene una única extensión $\widetilde{\eta}$ a $\overline{E}$, pues $\overline{E}$ es de Hilbert al ser un subespacio cerrado de $L^2(\Omega)$. Por el teorema de representación de Riesz, existe entonces $u \in \overline{E} \subset L^2(\Omega)$ tal que
+que podemos extender de forma única a $\overline{E}$. Notemos $\widetilde{\eta}$ a su extensión. Como $\overline{E}$ es un subespacio cerrado de $L^2(\Omega)$, es de Hilbert, y por el teorema de representación de Riesz existe $u \in \overline{E} \subset L^2(\Omega)$ tal que
 \[
 \ev{g,\varphi} = (\varphi,g) = (u,\L^\ast\varphi) = \ev{u,\L^\ast\varphi} = \ev{\L u, \varphi}
 \]
-para toda $\varphi \in \C_c^\infty(\Omega)$, y esto prueba finalmente que $\L u = g$.
+para toda $\varphi \in \C_c^\infty(\Omega)$. Vemos así que $\L u = g$. 
+
+Por último, dado que $\widetilde{\eta}$ es la extensión por densidad de $\eta$ sabemos que $\|\widetilde{\eta}\|_{\overline{E}^\ast} = \|\eta\|_{E^\ast}$, y al $u$ representar a $\widetilde{\eta}$ en definitiva es $\|u\| = \|\eta\|$. Como por definición es $\eta = (g,-) \circ (\L^\ast)^{-1}$, esto nos dice que
+\[
+\|u\| = \|\eta\| \leq \|(\L^\ast)^{-1}\| \|g\|,
+\]
+así que podemos tomar $C = \|(\L^\ast)^{-1}\|$.
 \end{proof}
 
 \section{\scshape La relación entre $\sop u$ y $\sop \L u$}
@@ -338,7 +349,7 @@ al subespacio de $L^2(B_r(0))$ que consiste de restringir funciones que anulan a
 \]
 para toda $\varphi \in \C_c^\infty(\R^n)$.
 \end{lemma}
-\begin{proof} Si $\L \varphi = 0$ en $B_R(0)$, sabemos que $\varphi = 0$ allí y por lo tanto $(\varphi,g)_{B_r(0)} = 0$. Si no, existe $\psi \in L^2(B_R(0))$ tal que $\L \psi = \L \varphi$. Además, existe \todo{esto es lo que falta ver!!!} $C' > 0$ tal que $\|\psi\|_{B_R(0)} \leq C'\|\L \varphi\|_{B_R(0)}$ independiente de $\psi$ y $\varphi$ \todo{Y esto, si no, no anda}. Como $g \in (N_{r,R,\L})^\perp$, es
+\begin{proof} Si $\L \varphi = 0$ en $B_R(0)$, sabemos que $\varphi = 0$ allí y por lo tanto $(\varphi,g)_{B_r(0)} = 0$. Si no, sabemos que existe $\psi \in L^2(B_R(0))$ tal que $\L \psi = \L \varphi$. Además, existe $C' > 0$ independiente de $\psi$ y $\varphi$ tal que $\|\psi\|_{B_R(0)} \leq C'\|\L \varphi\|_{B_R(0)}$. Como $g \in (N_{r,R,\L})^\perp$, es
 \[
 \ip{g,\varphi}_{B_r(0)} = \ip{g,\varphi-\psi}_{B_r(0)} + \ip{g,\psi}_{B_r(0)} = \ip{g,\psi}_{B_r(0)}
 \]
