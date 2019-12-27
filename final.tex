@@ -187,7 +187,7 @@ D^\alpha x_j\varphi = x_j \cdot \sum_{\beta \leq \alpha, \beta_1 = 0} {\alpha \c
 \]
 el operador $p_j(D)$ está bien definido y viene inducido por un polinomio, que notaremos $p_j$. Además, de la ecuación anterior se observa que $p_j(D)$ es cero si y sólo si $p$ no tiene monomios que contengan a la variable $X_j$. Dicho de otra forma, el operador diferencial $p_j(D)$ es nulo si y sólo si \guill{en $p(D)$ no hay derivadas con respecto a la $j$-ésima variable}.
 
-De ser no nulo, el orden de $p_j$ debe ser menor al de $p$, y existe $j \in \nat{n}$ tal que $p_j$ es de orden exactamente $m-1$ y $|p_j|_{m-1} \geq |p|_m$.\todo{¿por qué?} Esto nos dice que para terminar la demostración alcanzaría probar que para todo $j \in \nat{n}$ es
+De ser no nulo, el orden de $p_j$ debe ser menor al de $p$, y existe $j \in \nat{n}$ tal que $p_j$ es de orden exactamente $m-1$ y $|p_j|_{m-1} \geq |p|_m$. Esto nos dice que para terminar la demostración alcanzaría probar que para todo $j \in \nat{n}$ es
 \[
 \|p_j(D)\varphi\| \leq 2mA\|p(D)\varphi\| \tag{$\ast$}.
 \]
@@ -211,7 +211,7 @@ Para terminar, fijemos $j \in \nat{n}$ y veamos $\tpaint{($\ast$)}$ por inducci�
 \]
 para cualquier $i \in \nat{n}$. Aplicando esto a $p_j$, se obtiene entonces 
 \[
-\|p_j(D)\varphi\| \leq (2m-1)A\|p_j(D)\varphi\|.
+\|p_j(D)(x_i\varphi)\| \leq (2m-1)A\|p_j(D)\varphi\|.
 \]
 Ahora, observemos\footnote{Usamos aquí que los operadores diferenciales conmutan entre sí, y en particular es $\|q(D)\varphi\|^2 = \|q(D)^\ast \varphi\|^2$.} que
 \[
@@ -235,7 +235,7 @@ A partir de esta desigualdad, se obtiene inmediatamente la existencia de solucio
 
 \begin{corollary} \label{sol-l2}Sea $\Omega \subset \R^n$ un abierto acotado. Si $\L = p(D)$ es un operador diferencial, la ecuación 
 \[
-\L u = g.
+\L u = g
 \]
 tiene solución en $L^2(\Omega)$ para toda $g \in L^2(\Omega)$. Más aún, existe una constante $C > 0$ que sólo depende de $\L$ y $\Omega$ de forma que
 \[
@@ -253,7 +253,7 @@ está bien definido y resulta continua con respecto a la norma (en el caso de $E
 \]
 que podemos extender de forma única a $\overline{E}$. Notemos $\widetilde{\eta}$ a su extensión. Como $\overline{E}$ es un subespacio cerrado de $L^2(\Omega)$, es de Hilbert, y por el teorema de representación de Riesz existe $u \in \overline{E} \subset L^2(\Omega)$ tal que
 \[
-\ev{g,\varphi} = (\varphi,g) = (u,\L^\ast\varphi) = \ev{u,\L^\ast\varphi} = \ev{\L u, \varphi}
+\ev{g,\varphi} = (\varphi,g) = \widetilde{\eta}(\L\varphi) = (u,\L^\ast\varphi) = \ev{u,\L^\ast\varphi} = \ev{\L u, \varphi}
 \]
 para toda $\varphi \in \C_c^\infty(\Omega)$. Vemos así que $\L u = g$. 
 
@@ -309,7 +309,7 @@ Elevando al cuadrado esta desiguadad, se obtiene precisamente que
 \end{align*}
 y el lado derecho tiende a cero cuando $\eta \to \infty$. 
 
-\todo{Revisar!}Si ahora $H$ es un hiperplano cualquiera, rotando y trasladando obtenemos un difeomorfismo suave $\psi : \R^n \to \R^n$ que envía $H_0$ a $H$. Como $\sop \L (\varphi \circ \psi) \subset \sop (\L \varphi) \circ \psi$, sabemos que $\L \varphi \circ \psi$ se anula en $H_0$, y por lo tanto así lo hace $\varphi \circ \psi$. Esto concluye la demostración.
+Si ahora $H$ es un hiperplano cualquiera, rotando y trasladando obtenemos un difeomorfismo suave $\psi : \R^n \to \R^n$ que envía $H_0$ a $H$. Como $\sop \L (\varphi \circ \psi) \subset \sop (\L \varphi) \circ \psi$, sabemos que $\L \varphi \circ \psi$ se anula en $H_0$, y por lo tanto así lo hace $\varphi \circ \psi$. Esto concluye la demostración.
 \end{proof}
 
 \begin{corollary} Sea $\L = p(D)$ un operador diferencial y $\varphi \in C_c^\infty(\R^n)$. Si $\L \varphi$ está soportada en $B_r(0)$, entonces $\varphi$ está soportada en $B_r(0)$.
@@ -444,7 +444,7 @@ y esto tiende a cero si $n \to \infty$. Para terminar, veamos que $u := \lim_{k 
 \end{align*}
 ya que $\varphi$ tiene soporte compacto. Por lo tanto, es
 \begin{align*}
-\left\ev{\frac{\partial^n}{\partial x_1 \cdots \partial x_n} H,\varphi\right} &= \left\ev{H,(-1)^n \cdot \frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi\right} = (-1)^n\int_{\R^n}\frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi \cdot dx_1 \cdots dx_n\\
+\left\ev{\frac{\partial^n}{\partial x_1 \cdots \partial x_n} H,\varphi\right} &= \left\ev{H,(-1)^n \cdot \frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi\right} = (-1)^n\int_{\R^n}H \cdot \frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi \cdot dx_1 \cdots dx_n\\
 &= (-1)^n\int_0^\infty \cdots \ \ \int_0^\infty\frac{\partial^n}{\partial x_1 \cdots \partial x_n}\varphi \cdot dx_1 \cdots dx_n\\ &= (-1)^n(-1)^n\varphi(0,\dots,0) = \varphi(0) = \ev{\delta_0,\varphi}.
 \end{align*}
 \end{proof}
